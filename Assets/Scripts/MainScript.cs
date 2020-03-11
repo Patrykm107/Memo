@@ -4,17 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class MainScript : MonoBehaviour
 {
-    public GameObject cardPrefab;
-    public GameObject gamePanel;
-    public Sprite backgroundImage;
-    private List<GameObject> cards = new List<GameObject> ();
-    private List<Sprite> cardImages = new List<Sprite>();
+    [SerializeField]
+    private GameObject cardPrefab;
 
     [SerializeField]
+    private GameObject gamePanel;
+
+    [SerializeField]
+    private Sprite backgroundImage;
+
+    [SerializeField]
+    private GameObject scoreText;
+
+    [SerializeField]
+    private GameObject finishPanel;
+
     private int cardAmount = 8;
+    private int score = 0;
+    private int cardsLeft;
+
+    private List<GameObject> cards = new List<GameObject> ();
+    private List<Sprite> cardImages = new List<Sprite>();
 
     private static System.Random random = new System.Random();
 
@@ -23,10 +37,13 @@ public class MainScript : MonoBehaviour
     private int firstActiveCard = -1, secondActiveCard = -1;
 
     // Start is called before the first frame update
-    void Start()
+    public void StartGame(int cardAmount)
     {
+        this.cardAmount = cardAmount;
+        this.cardsLeft = cardAmount;
         AddCards();
         AddListeners();
+        UpdateScoreText();
     }
 
     void AddCards()
@@ -105,10 +122,6 @@ public class MainScript : MonoBehaviour
                 firstClick = true;
                 secondClick = false;
             }
-            else
-            {
-
-            }
         }
     }
 
@@ -117,10 +130,20 @@ public class MainScript : MonoBehaviour
         if(cards[firstActiveCard].GetComponent<Card>().pairId == cards[secondActiveCard].GetComponent<Card>().pairId)
         {
             StartCoroutine(HidePair());
+            score += 5;
+            UpdateScoreText();
+            cardsLeft -= 2;
+
+            if (cardsLeft == 0)
+            {
+                finishGame();
+            }
         } 
         else
         {
             StartCoroutine(TurnBackPair());
+            score -= 1;
+            UpdateScoreText();
         }
     }
 
@@ -143,6 +166,18 @@ public class MainScript : MonoBehaviour
         cards[firstActiveCard].GetComponent<Button>().image.sprite = backgroundImage;
         cards[secondActiveCard].GetComponent<Button>().image.sprite = backgroundImage;
         clickBlocked = false;
+    }
+
+    void UpdateScoreText()
+    {
+        scoreText.GetComponent<TextMeshProUGUI>().text = $"Score:\t{score}";
+    }
+
+    void finishGame()
+    {
+        gamePanel.transform.parent.gameObject.SetActive(false);
+        finishPanel.SetActive(true);
+        finishPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"Zdobyles {score} punktów!";
     }
 
     // Update is called once per frame

@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
         else
         {
             Card card = (Card) other;
-            return pairId == card.pairId;
+            return id == card.id;
         }
     }
 
