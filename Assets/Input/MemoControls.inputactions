@@ -1,0 +1,44 @@
+{
+    "name": "MemoControls",
+    "maps": [
+        {
+            "name": "During game",
+            "id": "0c65576c-21f5-4ffa-a5d7-75bfd41320fc",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "3b87c646-7da2-475b-87c4-ddd803094f28",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "37bab1a6-bf59-4aba-ba63-38a49fad6063",
+                    "path": "<Keyboard>/#(R)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c93574ef-db47-42d8-a06b-50eee844b15f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

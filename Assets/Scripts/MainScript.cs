@@ -23,6 +23,8 @@ public class MainScript : MonoBehaviour
     [SerializeField]
     private GameObject finishPanel;
 
+    MemoControls memoControls;
+
     private int cardAmount = 8;
     private int score = 0;
     private int cardsLeft;
@@ -44,6 +46,9 @@ public class MainScript : MonoBehaviour
         AddCards();
         AddListeners();
         UpdateScoreText();
+        memoControls = new MemoControls();
+        memoControls.Duringgame.Exit.performed += _ => this.GetComponentInParent<Restart>().RestartGame();
+        memoControls.Duringgame.Enable();
     }
 
     void AddCards()
@@ -175,6 +180,7 @@ public class MainScript : MonoBehaviour
 
     void finishGame()
     {
+        memoControls.Duringgame.Disable();
         gamePanel.transform.parent.gameObject.SetActive(false);
         finishPanel.SetActive(true);
         finishPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"Zdobyles {score} punktów!";
